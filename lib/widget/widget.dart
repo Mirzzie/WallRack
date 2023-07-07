@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:regwalls/model/wallpaper_model.dart';
 import 'package:regwalls/views/image_view.dart';
@@ -89,13 +90,14 @@ Widget wallpapersList({
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.black,
+                          foregroundColor: Theme.of(context).brightness == Brightness.dark ? Colors.black : Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18),
                           )),
                       child: Container(),
                       onPressed: () {
+                        HapticFeedback.vibrate();
                         Future.delayed(const Duration(milliseconds: 100), () {
                           Navigator.push(
                             context,
@@ -105,6 +107,8 @@ Widget wallpapersList({
                                 originalUrl: wallpaper.src!.original,
                                 photographer: wallpaper.photographer!,
                                 photographerUrl: wallpaper.photographerUrl!,
+                                imageHeight: wallpaper.imageHeight!,
+                                imageWidth: wallpaper.imageWidth!,
                               ),
                             ),
                           );
